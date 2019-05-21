@@ -31,6 +31,6 @@ handler.on("push", function (event) {
 function init() {
     console.log("init deploy task");
     shell.cd('../nestDemo/serve-data')
-    shell.exec('sh .shell/start.sh')
+    shell.exec('sh ./shell/start.sh')
 }
 
