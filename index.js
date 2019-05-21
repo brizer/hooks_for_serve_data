@@ -20,7 +20,10 @@ handler.on('push', function (event) {
   console.log('Received a push event for %s to %s',
     event.payload.repository.name,
     event.payload.ref)
-    // init() // 
+
+  if(event.payload.ref == 'refs/heads/deploy'){
+      init()
+  }
 }
 )
 function rumCommand( cmd, args, cwd, callback ) {
@@ -31,15 +34,7 @@ function rumCommand( cmd, args, cwd, callback ) {
 }
 
 function init() {
-  rumCommand('sh', ['../clean.sh'], './' ,function( result ) { // 清理缓存
-    console.log(result)
-  })
-
-  rumCommand('sh', ['../server/autoServer.sh'], '../server' ,function( result ) { // cLient端更新
-    console.log(result)
-  })
-  
-  rumCommand('sh', ['../client/autoClient.sh'], '../client' ,function( result ) { // server端更新
+  rumCommand('sh', ['../nestDemo/serve-data/shell/start.sh'], './' ,function( result ) { // 清理缓存
     console.log(result)
   })
 
