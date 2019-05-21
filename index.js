@@ -3,7 +3,7 @@ var spawn = require('child_process').spawn
 var http = require('http')
 var spawn = require('child_process').spawn
 var createHandler = require('github-webhook-handler')
-var handler = createHandler({ path: '/pushCode', secret: 'xxx' }) // 根据git上webhook的配置填写
+var handler = createHandler({ path: '/pushCode', secret: 'study' }) // 根据git上webhook的配置填写
 http.createServer(function (req, res) {
   handler(req, res, function (err) {
     res.statusCode = 404;
