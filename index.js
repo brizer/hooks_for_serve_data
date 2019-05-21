@@ -1,0 +1,48 @@
+
+var spawn = require('child_process').spawn
+var http = require('http')
+var spawn = require('child_process').spawn
+var createHandler = require('github-webhook-handler')
+var handler = createHandler({ path: '/pushCode', secret: 'xxx' }) // 根据git上webhook的配置填写
+http.createServer(function (req, res) {
+  handler(req, res, function (err) {
+    res.statusCode = 404;
+    res.end('no such location')
+  })
+}).listen(7777)
+
+handler.on('error', function (err) {
+  console.error('Error:', err.message)
+})
+
+// listening push event
+handler.on('push', function (event) {
+  console.log('Received a push event for %s to %s',
+    event.payload.repository.name,
+    event.payload.ref)
+    // init() // 
+}
+)
+function rumCommand( cmd, args, cwd, callback ) {
+  var child = spawn( cmd, args, {cwd: cwd} )
+  var response = ''
+  child.stdout.on('data', function( buffer ){ response += buffer.toString(); })
+  child.stdout.on('end', function(){ callback( response ) })
+}
+
+function init() {
+  rumCommand('sh', ['../clean.sh'], './' ,function( result ) { // 清理缓存
+    console.log(result)
+  })
+
+  rumCommand('sh', ['../server/autoServer.sh'], '../server' ,function( result ) { // cLient端更新
+    console.log(result)
+  })
+  
+  rumCommand('sh', ['../client/autoClient.sh'], '../client' ,function( result ) { // server端更新
+    console.log(result)
+  })
+
+}
+
+init() // 脚本运行第一次默认指向一次

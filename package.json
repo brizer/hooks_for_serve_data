@@ -1,0 +1,25 @@
+{
+  "name": "hooks_for_serve_data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2 start index.js",
+    "stop": "pm2 stop index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brizer/hooks_for_serve_data.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brizer/hooks_for_serve_data/issues"
+  },
+  "homepage": "https://github.com/brizer/hooks_for_serve_data#readme",
+  "dependencies": {
+    "github-webhook-handler": "^0.7.1"
+  }
+}
