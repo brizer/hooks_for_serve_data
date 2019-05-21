@@ -34,6 +34,7 @@ function rumCommand( cmd, args, cwd, callback ) {
 }
 
 function init() {
+  console.log('init deploy task')
   rumCommand('sh', ['../nestDemo/serve-data/shell/start.sh'], './' ,function( result ) { // 清理缓存
     console.log(result)
   })
