@@ -2,9 +2,14 @@ const shell = require("shelljs");
 var http = require("http");
 var createHandler = require("github-webhook-handler");
 var handler = createHandler({ path: "/pushCode", secret: "study" }); // 根据git上webhook的配置填写
+var handlerInterview = createHandler({ path: "/pushCodeInterview", secret: "study" }); // 根据git上webhook的配置填写
 http
     .createServer(function (req, res) {
         handler(req, res, function (err) {
+            res.statusCode = 404;
+            res.end("no such location");
+        });
+        handlerInterview(req, res, function (err) {
             res.statusCode = 404;
             res.end("no such location");
         });
@@ -23,14 +28,30 @@ handler.on("push", function (event) {
         event.payload.ref
     );
 
-    if (event.payload.ref == "refs/heads/deploy") {
+    if (event.payload.ref == "refs/heads/master") {
         init();
+    }
+});
+handlerInterview.on("push", function (event) {
+    console.log(
+        "Received a push event for %s to %s",
+        event.payload.repository.name,
+        event.payload.ref
+    );
+
+    if (event.payload.ref == "refs/heads/master") {
+        handlerInterview();
     }
 });
 
 function init() {
     console.log("init deploy task");
-    shell.cd('../nestDemo/serve-data')
-    shell.exec('sh ./shell/start.sh')
+    shell.cd('../awesome-url')
+    shell.exec('sh ./deploy.sh')
+}
+function handlerInterview() {
+    console.log("init deploy task");
+    shell.cd('../Interview')
+    shell.exec('sh ./deploy.sh')
 }
 
