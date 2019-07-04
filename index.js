@@ -47,11 +47,13 @@ handlerInterview.on("push", function (event) {
 function init() {
     console.log("init deploy task");
     shell.cd('../awesome-url')
+    shell.exec('git pull')
     shell.exec('sh ./deploy.sh')
 }
 function handlerInterview() {
     console.log("init deploy task");
     shell.cd('../Interview')
+    shell.exec('git pull')
     shell.exec('sh ./deploy.sh')
 }
 
