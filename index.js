@@ -5,6 +5,7 @@ var handler = createHandler({ path: "/pushCode", secret: "study" }); // 根据gi
 var handlerInterview = createHandler({ path: "/pushCodeInterview", secret: "study" }); // 根据git上webhook的配置填写
 http
     .createServer(function (req, res) {
+        console.log(req.path)
         handler(req, res, function (err) {
             res.statusCode = 404;
             res.end("no such location");
