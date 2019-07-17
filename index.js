@@ -1,7 +1,7 @@
 const shell = require("shelljs");
 var http = require("http");
 var createHandler = require("github-webhook-handler");
-var handler = createHandler({ path: "/pushCode", secret: "study" }); // 根据git上webhook的配置填写
+var handler = createHandler([{ path: "/pushCode", secret: "study" },{path:"/pushCodeInterview", secret: "study"}]); // 根据git上webhook的配置填写
 // var handlerInterview = createHandler({ path: "/pushCodeInterview", secret: "study" }); // 根据git上webhook的配置填写
 http
     .createServer(function (req, res) {
@@ -10,10 +10,6 @@ http
             res.statusCode = 404;
             res.end("no such location");
         });
-        // handlerInterview(req, res, function (err) {
-        //     res.statusCode = 404;
-        //     res.end("no such location");
-        // });
     })
     .listen(7777);
 
@@ -28,22 +24,20 @@ handler.on("push", function (event) {
         event.payload.repository.name,
         event.payload.ref
     );
-
     if (event.payload.ref == "refs/heads/master") {
-        init();
+        switch(event.path){
+            case '/pushCode':
+                init()
+                break;
+            case '/pushCodeInterview':
+                handlerInterview()
+                break;
+            default:
+                break;
+        }
     }
 });
-// handlerInterview.on("push", function (event) {
-//     console.log(
-//         "Received a push event for %s to %s",
-//         event.payload.repository.name,
-//         event.payload.ref
-//     );
 
-//     if (event.payload.ref == "refs/heads/master") {
-//         handlerInterview();
-//     }
-// });
 
 function init() {
     console.log("init deploy task");
@@ -51,10 +45,10 @@ function init() {
     shell.exec('git pull')
     shell.exec('sh ./deploy.sh')
 }
-// function handlerInterview() {
-//     console.log("init deploy task");
-//     shell.cd('../Interview')
-//     shell.exec('git pull')
-//     shell.exec('sh ./deploy.sh')
-// }
+function handlerInterview() {
+    console.log("init deploy task");
+    shell.cd('../Interview')
+    shell.exec('git pull')
+    shell.exec('sh ./deploy.sh')
+}
 

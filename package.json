@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/brizer/hooks_for_serve_data#readme",
   "dependencies": {
-    "github-webhook-handler": "^0.7.1",
+    "github-webhook-handler": "git+ssh://git@github.com:brizer/github-webhook-handler.git",
     "shelljs": "^0.8.3"
   },
   "devDependencies": {
